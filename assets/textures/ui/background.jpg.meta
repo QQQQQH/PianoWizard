@@ -6,7 +6,7 @@
   "filterMode": "bilinear",
   "premultiplyAlpha": false,
   "subMetas": {
-    "inGameBg": {
+    "background": {
       "ver": "1.0.4",
       "uuid": "88c1e2c3-d18f-4055-8634-54a1b48c59e8",
       "rawTextureUuid": "080b0a73-8105-49f2-93db-f331414772db",
