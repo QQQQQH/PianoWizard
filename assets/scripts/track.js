@@ -115,14 +115,14 @@ cc.Class({
                     let newParticle = cc.instantiate(this.keyExcellentParticlePrefab);
                     newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
                     this.node.addChild(newParticle);
-                    this.score += 2;
+                    this.score += 1;
                 }
                 else {
                     let newParticle = cc.instantiate(this.keyGoodParticlePrefab);
                     newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
                     this.node.addChild(newParticle);
 
-                    this.score++;
+                    this.score += 0.6;
                 }
             }
             else {

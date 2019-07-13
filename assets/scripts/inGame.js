@@ -50,30 +50,30 @@ cc.Class({
             type: cc.AudioClip
         },
     },
-    updateTotScore: function() {
+    updateTotScore: function () {
         this.totScore = this.track[0].getComponent('track').score
-                        +this.track[1].getComponent('track').score
-                        +this.track[2].getComponent('track').score
-                        +this.track[3].getComponent('track').score;
-        this.scoreDisplay.string = 'Score: '+this.totScore;
+            + this.track[1].getComponent('track').score
+            + this.track[2].getComponent('track').score
+            + this.track[3].getComponent('track').score;
+        this.scoreDisplay.string = 'Score: ' + this.totScore.toFixed(1);
     },
-    loadSheet: function(sheet) {
+    loadSheet: function (sheet) {
         this.titleDisplay.string = sheet.title;
         this.artistDisplay.string = sheet.artist;
         this.track[0].getComponent('track').musicSheet = sheet.track[0];
         this.track[1].getComponent('track').musicSheet = sheet.track[1];
         this.track[2].getComponent('track').musicSheet = sheet.track[2];
         this.track[3].getComponent('track').musicSheet = sheet.track[3];
-        
+
     },
-    review: function() {
+    review: function () {
         console.log('\n\n\n\n\nfinish audio\n\n\n\n\n');
     },
-    toSelect: function() {
-        cc.director.loadScene('select'); 
+    toSelect: function () {
+        cc.director.loadScene('select');
     },
-    control: function() {
-        if(cc.audioEngine.getState(this.audioId) == 1) {
+    control: function () {
+        if (cc.audioEngine.getState(this.audioId) == 1) {
             cc.audioEngine.pause(this.audioId);
             this.controlBtn.getComponent(cc.Sprite).spriteFrame = this.playBtn;
         }
@@ -84,7 +84,7 @@ cc.Class({
     },
     onLoad() {
         this.updateTotScore();
-        cc.loader.loadRes(`sheets/0`, function(err, jsonAssert) {
+        cc.loader.loadRes(`sheets/0`, function (err, jsonAssert) {
             this.loadSheet(jsonAssert.json);
         }.bind(this));
         this.audioId = cc.audioEngine.play(this.audio, false, 1);
@@ -98,7 +98,7 @@ cc.Class({
         console.log(global.musicId);
     },
     start() {
-        
+
     },
     update(dt) {
         this.updateTotScore();
