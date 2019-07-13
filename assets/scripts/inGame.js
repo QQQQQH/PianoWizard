@@ -7,6 +7,7 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
+var global = require('global');
 
 cc.Class({
     extends: cc.Component,
@@ -68,8 +69,8 @@ cc.Class({
     review: function() {
         console.log('\n\n\n\n\nfinish audio\n\n\n\n\n');
     },
-    toSelector: function() {
-        cc.director.loadScene('menu'); // test
+    toSelect: function() {
+        cc.director.loadScene('select'); 
     },
     control: function() {
         if(cc.audioEngine.getState(this.audioId) == 1) {
@@ -83,7 +84,7 @@ cc.Class({
     },
     onLoad() {
         this.updateTotScore();
-        cc.loader.loadRes('sheets/0', function(err, jsonAssert) {
+        cc.loader.loadRes(`sheets/0`, function(err, jsonAssert) {
             this.loadSheet(jsonAssert.json);
         }.bind(this));
         this.audioId = cc.audioEngine.play(this.audio, false, 1);
@@ -92,8 +93,9 @@ cc.Class({
         this.track[2].getComponent('track').audioId = this.audioId;
         this.track[3].getComponent('track').audioId = this.audioId;
         cc.audioEngine.setFinishCallback(this.audioId, this.review);
-        this.controlBtn.on(cc.Node.EventType.MOUSE_UP, this.control, this);
-        this.returnBtn.on(cc.Node.EventType.MOUSE_UP, this.toSelector, this);
+        this.controlBtn.on(cc.Node.EventType.TOUCH_START, this.control, this);
+        this.returnBtn.on(cc.Node.EventType.TOUCH_START, this.toSelect, this);
+        console.log(global.musicId);
     },
     start() {
         

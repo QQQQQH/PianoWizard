@@ -19,11 +19,11 @@ cc.Class({
     },
 
     // LIFE-CYCLE CALLBACKS:
-    toSelector: function() {
-        cc.director.loadScene('inGame');
+    toSelect: function() {
+        cc.director.loadScene('select');
     },
     onLoad () {
-        this.enterBtn.on(cc.Node.EventType.MOUSE_UP, this.toSelector, this);
+        this.enterBtn.on(cc.Node.EventType.TOUCH_START, this.toSelect, this);
     },
 
     start () {

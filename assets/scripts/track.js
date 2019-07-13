@@ -64,8 +64,8 @@ cc.Class({
         this.score = 0;
         this.addButton();
 
-        //this.musicSheet = [4, 5, 5.5, 6, 7];
-        this.keyQueue = new Array;
+        this.musicSheet = [];
+        this.keyQueue = [];
         this.sheetIndex = 0;
 
         //得分为good和excellent的距离
