@@ -17,7 +17,7 @@ cc.Class({
     },
 
     onTouch(event) {
-        this.railWay.onTouch(this.node.y + this.node.height / 2);
+        this.railWay.onTouch();
     },
 
     onLoad: function () {
@@ -25,7 +25,13 @@ cc.Class({
         this.node.height = this.railWay.node.height * this.heightScaling;
         this.node.x = 0;
         this.node.y = this.railWay.node.height * (this.heightScaling / 2);
+        // 添加触摸监听事件
         this.node.on(cc.Node.EventType.TOUCH_START, this.onTouch, this);
+    },
+
+    onDestroy: function () {
+        // 销毁事件
+        this.node.off(cc.Node.EventType.TOUCH_START, this.onTouch, this);
     },
 
 

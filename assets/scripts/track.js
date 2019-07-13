@@ -12,10 +12,6 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        hitDist: 50,
-
-        dropDuration: 3,
-
         keyPrefab: {
             default: null,
             type: cc.Prefab
@@ -25,6 +21,21 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+
+        keyMissParticlePrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+
+        keyGoodParticlePrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+
+        keyExcellentParticlePrefab: {
+            default: null,
+            type: cc.Prefab
+        }
     },
 
 
@@ -33,7 +44,10 @@ cc.Class({
 
         newButton.getComponent('button').railWay = this;
 
-        this.node.addChild(newButton);
+        this.button = newButton;
+        // buttomLine的Y坐标(即button中心的Y坐标)
+        this.buttomLineY = this.button.y;
+        this.node.addChild(this.button);
     },
 
     addNewKey: function () {
@@ -54,6 +68,15 @@ cc.Class({
         this.keyQueue = [];
         this.sheetIndex = 0;
 
+        //得分为good和excellent的距离
+        const goodDistScaling = 0.2;
+
+        const excellentDistScaling = 0.1;
+        this.goodDist = this.node.height * goodDistScaling;
+        this.excellentDist = this.node.height * excellentDistScaling;
+
+        this.dropDuration = 3;
+
         //this.timer = 0;
     },
 
@@ -71,22 +94,43 @@ cc.Class({
             ++this.sheetIndex;
         }
         if (this.keyQueue.length > 0) {
-            if (this.keyQueue[0].y + this.keyQueue[0].height / 2 < 0) {
+            // 如果琴键的上边界低于buttomLine则销毁
+            if (this.keyQueue[0].y + this.keyQueue[0].height / 2 < this.button.y) {
+                let newParticle = cc.instantiate(this.keyMissParticlePrefab);
+                newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                this.node.addChild(newParticle);
                 this.destroyKey();
-
             }
         }
     },
 
-    onTouch(buttonY) {
+    onTouch() {
         if (this.keyQueue.length > 0) {
+            // 琴键下边界的Y坐标
             let keyY = this.keyQueue[0].y - this.keyQueue[0].height / 2;
-            let dist = keyY - buttonY;
-            if (dist <= this.hitDist) {
-                this.score++;
+            // 琴键的下边界和buttomLine之间的距离的绝对值
+            let dist = Math.abs(keyY - this.buttomLineY);
+            if (dist <= this.goodDist) {
+                if (dist <= this.excellentDist) {
+                    let newParticle = cc.instantiate(this.keyExcellentParticlePrefab);
+                    newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                    this.node.addChild(newParticle);
+                    this.score += 2;
+                }
+                else {
+                    let newParticle = cc.instantiate(this.keyGoodParticlePrefab);
+                    newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                    this.node.addChild(newParticle);
+
+                    this.score++;
+                }
+            }
+            else {
+                let newParticle = cc.instantiate(this.keyMissParticlePrefab);
+                newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                this.node.addChild(newParticle);
             }
             this.destroyKey();
         }
-        cc.log(this.score);
     }
 });

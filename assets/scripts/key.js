@@ -19,7 +19,7 @@ cc.Class({
 
 
     setDropAction: function () {
-        let drop = cc.moveBy(this.dropDuration, cc.v2(0, -this.railWay.node.height));
+        let drop = cc.moveBy(this.dropDuration, cc.v2(0, -this.dropDist));
 
         return cc.repeatForever(drop);
     },
@@ -29,6 +29,10 @@ cc.Class({
         this.node.height = this.railWay.node.height * this.heightScaling;
         this.node.x = 0;
         this.node.y = this.railWay.node.height * (1 - this.heightScaling / 2);
+
+        // 下落的距离是从起始位置到轨道中buttomLine的位置
+        this.dropDist = this.node.y - this.node.height / 2
+            - this.railWay.getComponent('track').buttomLineY;
 
         this.dropAction = this.setDropAction();
         this.node.runAction(this.dropAction);
