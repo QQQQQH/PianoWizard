@@ -17,7 +17,7 @@ cc.Class({
     },
 
     onTouch(event) {
-        this.railWay.onTouch(this.node.y + this.node.height / 2);
+        this.railWay.onTouch();
     },
 
     onLoad: function () {
