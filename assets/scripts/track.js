@@ -21,6 +21,21 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
+
+        keyMissParticlePrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+
+        keyGoodParticlePrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+
+        keyExcellentParticlePrefab: {
+            default: null,
+            type: cc.Prefab
+        }
     },
 
 
@@ -81,6 +96,9 @@ cc.Class({
         if (this.keyQueue.length > 0) {
             // 如果琴键的上边界低于buttomLine则销毁
             if (this.keyQueue[0].y + this.keyQueue[0].height / 2 < this.button.y) {
+                let newParticle = cc.instantiate(this.keyMissParticlePrefab);
+                newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                this.node.addChild(newParticle);
                 this.destroyKey();
             }
         }
@@ -92,17 +110,27 @@ cc.Class({
             let keyY = this.keyQueue[0].y - this.keyQueue[0].height / 2;
             // 琴键的下边界和buttomLine之间的距离的绝对值
             let dist = Math.abs(keyY - this.buttomLineY);
-            cc.log(dist, this.goodDist, this.excellentDist);
             if (dist <= this.goodDist) {
                 if (dist <= this.excellentDist) {
+                    let newParticle = cc.instantiate(this.keyExcellentParticlePrefab);
+                    newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                    this.node.addChild(newParticle);
                     this.score += 2;
                 }
                 else {
+                    let newParticle = cc.instantiate(this.keyGoodParticlePrefab);
+                    newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                    this.node.addChild(newParticle);
+
                     this.score++;
                 }
             }
+            else {
+                let newParticle = cc.instantiate(this.keyMissParticlePrefab);
+                newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                this.node.addChild(newParticle);
+            }
             this.destroyKey();
         }
-        cc.log(this.score);
     }
 });
