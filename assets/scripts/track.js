@@ -77,7 +77,7 @@ cc.Class({
 
         this.dropDuration = 3;
 
-        //this.timer = 0;
+        this.timer = 0;
     },
 
     destroyKey: function () {
@@ -92,8 +92,8 @@ cc.Class({
     },
 
     update(dt) {
-        this.timer = cc.audioEngine.getCurrentTime(this.audioId);
-        //this.timer += dt;
+        // this.timer = cc.audioEngine.getCurrentTime(this.audioId);
+        this.timer += dt;
         if (this.sheetIndex < this.musicSheet.length &&
             this.timer >= this.musicSheet[this.sheetIndex] - this.dropDuration) {
             this.addNewKey();

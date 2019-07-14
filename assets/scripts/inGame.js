@@ -55,11 +55,16 @@ cc.Class({
             + this.track[1].getComponent('track').score
             + this.track[2].getComponent('track').score
             + this.track[3].getComponent('track').score;
-        this.scoreDisplay.string = 'Score: ' + this.totScore.toFixed(1);
+        this.scoreDisplay.string = (this.totScore*100/this.acScore).toFixed(1) + '%';
     },
     loadSheet: function (sheet) {
         this.titleDisplay.string = sheet.title;
         this.artistDisplay.string = sheet.artist;
+        this.acScore = sheet.track[0].length
+            + sheet.track[1].length
+            + sheet.track[2].length
+            + sheet.track[3].length;
+        this.fullScore
         this.track[0].getComponent('track').musicSheet = sheet.track[0];
         this.track[1].getComponent('track').musicSheet = sheet.track[1];
         this.track[2].getComponent('track').musicSheet = sheet.track[2];
@@ -84,7 +89,7 @@ cc.Class({
     },
     onLoad() {
         this.updateTotScore();
-        cc.loader.loadRes(`sheets/0`, function (err, jsonAssert) {
+        cc.loader.loadRes(`sheets/${global.musicId}`, function (err, jsonAssert) {
             this.loadSheet(jsonAssert.json);
         }.bind(this));
         this.audioId = cc.audioEngine.play(this.audio, false, 1);
@@ -95,7 +100,6 @@ cc.Class({
         cc.audioEngine.setFinishCallback(this.audioId, this.review);
         this.controlBtn.on(cc.Node.EventType.TOUCH_START, this.control, this);
         this.returnBtn.on(cc.Node.EventType.TOUCH_START, this.toSelect, this);
-        console.log(global.musicId);
     },
     start() {
 

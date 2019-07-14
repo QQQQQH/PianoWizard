@@ -21,6 +21,14 @@ cc.Class({
             default: null,
             type: cc.Node
         },
+        coverPrefab: {
+            default: null,
+            type: cc.Prefab
+        },
+        coverSpriteFrame: {
+            default: null,
+            type: cc.SpriteFrame
+        },
         musicInfo: {
             default: null,
             type: cc.Node
@@ -35,9 +43,24 @@ cc.Class({
     },
     updateMusicInfo: function() {
         let index = this.pageView.getCurrentPageIndex();
-        this.musicInfo.children[0].getComponent(cc.Label).string = this.playlist[index].title;
-        this.musicInfo.children[1].getComponent(cc.Label).string = this.playlist[index].artist;
+        this.musicInfo.children[0].getComponent(cc.Label).string = this.musicList[index].title;
+        this.musicInfo.children[1].getComponent(cc.Label).string = this.musicList[index].artist;
     },
+    loadMusicList: function() {
+        for(let i = 0;i < this.musicList.length;i++) {
+            let cover = cc.instantiate(this.coverPrefab);
+            cover.on(cc.Node.EventType.TOUCH_END, this.toInGame.bind(this, i), this);
+            this.pageView.addPage(cover);
+            // this.coverSet.children[i].getComponent(cc.Sprite).spriteFrame = this.coverSpriteFrame;
+        }
+        this.pageView.setCurrentPageIndex(global.musicId);
+        cc.loader.loadResDir('covers', cc.SpriteFrame, function(err, spriteFrame) {
+            for(let i = 0;i < this.coverSet.children.length;i++) {
+                this.coverSet.children[i].getComponent(cc.Sprite).spriteFrame = spriteFrame[i];
+            }
+        }.bind(this));
+    },
+    
     toMenu: function() {
         cc.director.loadScene('menu');
     },
@@ -46,18 +69,16 @@ cc.Class({
         cc.director.loadScene('inGame');
     },
     onLoad () {
-        cc.loader.loadRes('playlist', function(err, jsonAssert) {
-            this.playlist = jsonAssert.json;
+        cc.loader.loadRes('musicList', function(err, jsonAssert) {
+            this.musicList = jsonAssert.json;
+            this.loadMusicList();
             this.updateMusicInfo();
         }.bind(this));
         this.returnBtn.on(cc.Node.EventType.TOUCH_END, this.toMenu, this);
-        for(let i = 0;i < this.coverSet.children.length;i++) {
-            this.coverSet.children[i].on(cc.Node.EventType.TOUCH_END, this.toInGame.bind(this, i), this);
-        }
     },
 
     start () {
-        this.pageView.setCurrentPageIndex(global.musicId);
+        
     },
 
     update (dt) {
