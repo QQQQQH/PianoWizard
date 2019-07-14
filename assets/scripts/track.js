@@ -85,6 +85,12 @@ cc.Class({
         this.keyQueue.shift();
     },
 
+    fadeOutKey: function (key) {
+        if (key.getComponent('key').fadding === false) {
+            key.getComponent('key').fadding = true;
+        }
+    },
+
     update(dt) {
         this.timer = cc.audioEngine.getCurrentTime(this.audioId);
         //this.timer += dt;
@@ -94,12 +100,16 @@ cc.Class({
             ++this.sheetIndex;
         }
         if (this.keyQueue.length > 0) {
-            // 如果琴键的上边界低于buttomLine则销毁
-            if (this.keyQueue[0].y + this.keyQueue[0].height / 2 < this.button.y) {
-                let newParticle = cc.instantiate(this.keyMissParticlePrefab);
-                newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
-                this.node.addChild(newParticle);
-                this.destroyKey();
+            if (this.keyQueue[0].y - this.keyQueue[0].height / 2 <= this.buttomLineY) {
+                this.fadeOutKey(this.keyQueue[0]);
+                if (this.keyQueue[0].y + this.keyQueue[0].height / 2 <= this.buttomLineY) {
+                    /*
+                    let newParticle = cc.instantiate(this.keyMissParticlePrefab);
+                    newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                    this.node.addChild(newParticle);
+                    */
+                    this.keyQueue.shift();
+                }
             }
         }
     },

@@ -14,6 +14,7 @@ cc.Class({
     properties: {
         widthScaling: 0.9,
         heightScaling: 0.05,
+        //fadeOutDuration:
     },
 
 
@@ -36,6 +37,25 @@ cc.Class({
 
         this.dropAction = this.setDropAction();
         this.node.runAction(this.dropAction);
+
+        this.fadding = false;
+        this.dropSpeed = this.dropDist / this.dropDuration;
+        this.buttomBlankDist = 80;
+        this.fadeDist = this.node.height + this.railWay.getComponent('track').buttomLineY + this.buttomBlankDist;
+        this.fadeDuration = this.fadeDist / this.dropSpeed;
+        this.fadeTimer = 0;
+    },
+
+    update: function (dt) {
+        if (this.fadding === true) {
+            this.fadeTimer += dt;
+            if (this.node.y + this.node.height / 2 <= -this.buttomBlankDist) {
+                this.destroy();
+            }
+            let opacityRatio = 1 - this.fadeTimer / this.fadeDuration;
+            let minOpacity = 50;
+            this.node.opacity = minOpacity + Math.floor(opacityRatio * (255 - minOpacity));
+        }
     },
 
 });
