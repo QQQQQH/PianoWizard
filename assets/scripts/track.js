@@ -75,7 +75,7 @@ cc.Class({
         this.goodDist = this.node.height * goodDistScaling;
         this.excellentDist = this.node.height * excellentDistScaling;
 
-        this.dropDuration = 3;
+        this.dropDuration = 2;
         this.timer = -1;
         this.check = true;
     },
