@@ -76,8 +76,8 @@ cc.Class({
         this.excellentDist = this.node.height * excellentDistScaling;
 
         this.dropDuration = 3;
-
-        this.timer = 0;
+        this.timer = -1;
+        this.check = true;
     },
 
     destroyKey: function () {
@@ -93,26 +93,30 @@ cc.Class({
 
     update(dt) {
         // this.timer = cc.audioEngine.getCurrentTime(this.audioId);
-        this.timer += dt;
-        if (this.sheetIndex < this.musicSheet.length &&
-            this.timer >= this.musicSheet[this.sheetIndex] - this.dropDuration) {
-            this.addNewKey();
-            ++this.sheetIndex;
-        }
-        if (this.keyQueue.length > 0) {
-            if (this.keyQueue[0].y - this.keyQueue[0].height / 2 <= this.buttomLineY) {
-                this.fadeOutKey(this.keyQueue[0]);
-                if (this.keyQueue[0].y + this.keyQueue[0].height / 2 <= this.buttomLineY) {
-                    /*
-                    let newParticle = cc.instantiate(this.keyMissParticlePrefab);
-                    newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
-                    this.node.addChild(newParticle);
-                    */
-                    this.keyQueue.shift();
+        if (this.timer >= 0) {
+            this.timer += dt;
+            if (this.sheetIndex < this.musicSheet.length &&
+                this.timer >= this.musicSheet[this.sheetIndex] - this.dropDuration) {
+                this.addNewKey();
+                ++this.sheetIndex;
+            }
+            if (this.keyQueue.length > 0) {
+                if (this.keyQueue[0].y - this.keyQueue[0].height / 2 <= this.buttomLineY) {
+                    this.fadeOutKey(this.keyQueue[0]);
+                    if (this.keyQueue[0].y + this.keyQueue[0].height / 2 <= this.buttomLineY) {
+                        /*
+                        let newParticle = cc.instantiate(this.keyMissParticlePrefab);
+                        newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
+                        this.node.addChild(newParticle);
+                        */
+                        this.keyQueue.shift();
+                    }
                 }
             }
         }
+
     },
+
 
     onTouch() {
         if (this.keyQueue.length > 0) {

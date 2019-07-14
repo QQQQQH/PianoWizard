@@ -75,6 +75,7 @@ cc.Class({
         console.log('\n\n\n\n\nfinish audio\n\n\n\n\n');
     },
     toSelect: function () {
+        cc.audioEngine.stop(this.audioId);
         cc.director.loadScene('select');
     },
     control: function () {
@@ -91,15 +92,18 @@ cc.Class({
         this.updateTotScore();
         cc.loader.loadRes(`sheets/${global.musicId}`, function (err, jsonAssert) {
             this.loadSheet(jsonAssert.json);
+            this.audioId = cc.audioEngine.play(this.audio, false, 1);
+            this.track[0].getComponent('track').timer = 0;
+            this.track[1].getComponent('track').timer = 0;
+            this.track[2].getComponent('track').timer = 0;
+            this.track[3].getComponent('track').timer = 0;
         }.bind(this));
-        this.audioId = cc.audioEngine.play(this.audio, false, 1);
-        this.track[0].getComponent('track').audioId = this.audioId;
-        this.track[1].getComponent('track').audioId = this.audioId;
-        this.track[2].getComponent('track').audioId = this.audioId;
-        this.track[3].getComponent('track').audioId = this.audioId;
-        cc.audioEngine.setFinishCallback(this.audioId, this.review);
         this.controlBtn.on(cc.Node.EventType.TOUCH_START, this.control, this);
         this.returnBtn.on(cc.Node.EventType.TOUCH_START, this.toSelect, this);
+        
+        
+        cc.audioEngine.setFinishCallback(this.audioId, this.review);
+        
     },
     start() {
 

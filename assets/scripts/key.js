@@ -21,7 +21,6 @@ cc.Class({
 
     setDropAction: function () {
         let drop = cc.moveBy(this.dropDuration, cc.v2(0, -this.dropDist));
-
         return cc.repeatForever(drop);
     },
 

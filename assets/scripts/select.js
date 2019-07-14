@@ -38,9 +38,6 @@ cc.Class({
             type: cc.Node
         }
     },
-    enterGame: function() {
-        cc.director.loadScene('inGame');
-    },
     updateMusicInfo: function() {
         let index = this.pageView.getCurrentPageIndex();
         this.musicInfo.children[0].getComponent(cc.Label).string = this.musicList[index].title;
@@ -51,14 +48,11 @@ cc.Class({
             let cover = cc.instantiate(this.coverPrefab);
             cover.on(cc.Node.EventType.TOUCH_END, this.toInGame.bind(this, i), this);
             this.pageView.addPage(cover);
-            // this.coverSet.children[i].getComponent(cc.Sprite).spriteFrame = this.coverSpriteFrame;
+            cc.loader.loadRes(`covers/cover${i}`, cc.SpriteFrame, function(err, spriteFrame) {
+                this.coverSet.children[i].getComponent(cc.Sprite).spriteFrame = spriteFrame;
+            }.bind(this));
         }
         this.pageView.setCurrentPageIndex(global.musicId);
-        cc.loader.loadResDir('covers', cc.SpriteFrame, function(err, spriteFrame) {
-            for(let i = 0;i < this.coverSet.children.length;i++) {
-                this.coverSet.children[i].getComponent(cc.Sprite).spriteFrame = spriteFrame[i];
-            }
-        }.bind(this));
     },
     
     toMenu: function() {
@@ -78,7 +72,6 @@ cc.Class({
     },
 
     start () {
-        
     },
 
     update (dt) {
