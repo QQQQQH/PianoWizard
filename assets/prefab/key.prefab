@@ -32,9 +32,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 161,
-      "g": 236,
-      "b": 194,
+      "r": 238,
+      "g": 191,
+      "b": 168,
       "a": 255
     },
     "_contentSize": {
@@ -109,7 +109,6 @@
       "__id__": 1
     },
     "_enabled": true,
-    "dropDuration": 3,
     "widthScaling": 0.9,
     "heightScaling": 0.05,
     "_id": ""
