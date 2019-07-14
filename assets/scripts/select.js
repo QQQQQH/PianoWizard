@@ -7,7 +7,6 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-let global = require('global');
 
 cc.Class({
     extends: cc.Component,
@@ -52,15 +51,15 @@ cc.Class({
                 this.coverSet.children[i].getComponent(cc.Sprite).spriteFrame = spriteFrame;
             }.bind(this));
         }
-        this.pageView.setCurrentPageIndex(global.musicId);
+        this.pageView.setCurrentPageIndex(gameData.musicId);
     },
     
     toMenu: function() {
         cc.director.loadScene('menu');
     },
     toInGame: function(musicId) {
-        global.musicId = musicId;
-        cc.director.loadScene('inGame');
+        gameData.musicId = musicId;
+        sceneControl.switchScene('select', 'inGame');
     },
     onLoad () {
         cc.loader.loadRes('musicList', function(err, jsonAssert) {

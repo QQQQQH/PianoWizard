@@ -7,7 +7,6 @@
 // Learn life-cycle callbacks:
 //  - [Chinese] https://docs.cocos.com/creator/manual/zh/scripting/life-cycle-callbacks.html
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
-var global = require('global');
 
 cc.Class({
     extends: cc.Component,
@@ -89,8 +88,9 @@ cc.Class({
         }
     },
     onLoad() {
+        sceneControl.fadeIn('inGame');
         this.updateTotScore();
-        cc.loader.loadRes(`sheets/${global.musicId}`, function (err, jsonAssert) {
+        cc.loader.loadRes(`sheets/${gameData.musicId}`, function (err, jsonAssert) {
             this.loadSheet(jsonAssert.json);
             this.audioId = cc.audioEngine.play(this.audio, false, 1);
             this.track[0].getComponent('track').timer = 0;
