@@ -17,18 +17,10 @@ cc.Class({
             type: cc.Node
         }
     },
-
-    // LIFE-CYCLE CALLBACKS:
-    toSelect: function() {
-        cc.director.loadScene('select');
-    },
     onLoad () {
-        this.enterBtn.on(cc.Node.EventType.TOUCH_START, this.toSelect, this);
+        sceneControl.fadeIn('menu');
+        this.enterBtn.on(cc.Node.EventType.TOUCH_START, function() {
+            sceneControl.switchScene('menu', 'select');
+        });
     },
-
-    start () {
-
-    },
-
-    // update (dt) {},
 });

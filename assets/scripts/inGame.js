@@ -50,11 +50,12 @@ cc.Class({
         },
     },
     updateTotScore: function () {
-        this.totScore = this.track[0].getComponent('track').score
+        var tmp = this.track[0].getComponent('track').score
             + this.track[1].getComponent('track').score
             + this.track[2].getComponent('track').score
             + this.track[3].getComponent('track').score;
-        this.scoreDisplay.string = (this.totScore*100/this.acScore).toFixed(1) + '%';
+        gameData.finalScore = (tmp*100/this.acScore).toFixed(1);
+        this.scoreDisplay.string = gameData.finalScore+'%';
     },
     loadSheet: function (sheet) {
         this.titleDisplay.string = sheet.title;
@@ -68,16 +69,8 @@ cc.Class({
         this.track[1].getComponent('track').musicSheet = sheet.track[1];
         this.track[2].getComponent('track').musicSheet = sheet.track[2];
         this.track[3].getComponent('track').musicSheet = sheet.track[3];
-
     },
-    review: function () {
-        console.log('\n\n\n\n\nfinish audio\n\n\n\n\n');
-    },
-    toSelect: function () {
-        cc.audioEngine.stop(this.audioId);
-        cc.director.loadScene('select');
-    },
-    control: function () {
+    control: function() {
         if (cc.audioEngine.getState(this.audioId) == 1) {
             cc.audioEngine.pause(this.audioId);
             this.controlBtn.getComponent(cc.Sprite).spriteFrame = this.playBtn;
@@ -97,13 +90,15 @@ cc.Class({
             this.track[1].getComponent('track').timer = 0;
             this.track[2].getComponent('track').timer = 0;
             this.track[3].getComponent('track').timer = 0;
+            cc.audioEngine.setFinishCallback(this.audioId, function() {
+                sceneControl.switchScene('inGame', 'review');
+            });
         }.bind(this));
         this.controlBtn.on(cc.Node.EventType.TOUCH_START, this.control, this);
-        this.returnBtn.on(cc.Node.EventType.TOUCH_START, this.toSelect, this);
-        
-        
-        cc.audioEngine.setFinishCallback(this.audioId, this.review);
-        
+        this.returnBtn.on(cc.Node.EventType.TOUCH_START, function() {
+            cc.audioEngine.stop(this.audioId);
+            sceneControl.switchScene('inGame', 'select');
+        }.bind(this));
     },
     start() {
 

@@ -22,8 +22,8 @@ var SceneControl = cc.Class({
             cc.director.loadScene(newScene);
         }).start();
     },
-    fadeIn: function() {
-        var canvas = cc.director.getScene().getChildByName('inGame');
+    fadeIn: function(sceneName) {
+        var canvas = cc.director.getScene().getChildByName(sceneName);
             canvas.opacity = 0;
             cc.tween(canvas).to(this.duration, { opacity: 255 }).start();
     }
@@ -34,7 +34,9 @@ var GameData = cc.Class({
     name: 'GameData',
 
     properties: {
-        musicId: 0
+        musicId: 0,
+        finalScore: 98.7,
+        award: 'All Combo'
     },
 });
 

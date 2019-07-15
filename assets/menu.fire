@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.2996654891162954,
-      "y": 0.2996654891162954,
+      "x": 0.2861111111111111,
+      "y": 0.2861111111111111,
       "z": 1
     },
     "_quat": {
@@ -53,12 +53,12 @@
       "w": 1
     },
     "groupIndex": 0,
-    "autoReleaseAssets": false,
+    "autoReleaseAssets": true,
     "_id": "dd0c348a-c810-42ab-9e85-26309a83b244"
   },
   {
     "__type__": "cc.Node",
-    "_name": "Canvas",
+    "_name": "menu",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -75,7 +75,7 @@
       }
     ],
     "_active": true,
-    "_level": 0,
+    "_level": 1,
     "_components": [
       {
         "__id__": 10
