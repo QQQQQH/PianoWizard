@@ -89,6 +89,11 @@ cc.Class({
             key.getComponent('key').fadding = true;
         }
     },
+
+    updateHit(hit) {
+        this.game.getComponent('inGame').updateHitCnt(hit);
+    },
+
     update(dt) {
         // this.timer = cc.audioEngine.getCurrentTime(this.audioId);
         if (this.timer >= 0) {
@@ -108,6 +113,7 @@ cc.Class({
                         this.node.addChild(newParticle);
                         */
                         this.keyQueue.shift();
+                        this.updateHit(false);
                     }
                 }
             }
@@ -136,11 +142,13 @@ cc.Class({
 
                     this.score += 0.6;
                 }
+                this.updateHit(true);
             }
             else {
                 let newParticle = cc.instantiate(this.keyMissParticlePrefab);
                 newParticle.setPosition(this.keyQueue[0].x, this.keyQueue[0].y);
                 this.node.addChild(newParticle);
+                this.updateHit(false);
             }
             this.destroyKey();
         }

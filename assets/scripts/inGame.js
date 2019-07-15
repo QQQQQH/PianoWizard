@@ -54,8 +54,8 @@ cc.Class({
             + this.track[1].getComponent('track').score
             + this.track[2].getComponent('track').score
             + this.track[3].getComponent('track').score;
-        gameData.finalScore = (tmp*100/this.acScore).toFixed(1);
-        this.scoreDisplay.string = gameData.finalScore+'%';
+        gameData.finalScore = (tmp * 100 / this.acScore).toFixed(1);
+        this.scoreDisplay.string = gameData.finalScore + '%';
     },
     loadSheet: function (sheet) {
         this.titleDisplay.string = sheet.title;
@@ -70,7 +70,7 @@ cc.Class({
         this.track[2].getComponent('track').musicSheet = sheet.track[2];
         this.track[3].getComponent('track').musicSheet = sheet.track[3];
     },
-    control: function() {
+    control: function () {
         if (cc.audioEngine.getState(this.audioId) == 1) {
             cc.audioEngine.pause(this.audioId);
             this.controlBtn.getComponent(cc.Sprite).spriteFrame = this.playBtn;
@@ -80,9 +80,25 @@ cc.Class({
             this.controlBtn.getComponent(cc.Sprite).spriteFrame = this.pauseBtn;
         }
     },
+    updateHitCnt: function (hit) {
+        if (hit === true) {
+            this.hitCnt++;
+        }
+        else {
+            this.hitCnt = 0;
+        }
+        cc.log(this.hitCnt);
+    },
+    setTrack: function () {
+        this.track[0].getComponent('track').game = this;
+        this.track[1].getComponent('track').game = this;
+        this.track[2].getComponent('track').game = this;
+        this.track[3].getComponent('track').game = this;
+    },
     onLoad() {
         sceneControl.fadeIn('inGame');
-        this.updateTotScore();
+        //this.updateTotScore();
+        this.setTrack();
         cc.loader.loadRes(`sheets/${gameData.musicId}`, function (err, jsonAssert) {
             this.loadSheet(jsonAssert.json);
             this.audioId = cc.audioEngine.play(this.audio, false, 1);
@@ -90,15 +106,16 @@ cc.Class({
             this.track[1].getComponent('track').timer = 0;
             this.track[2].getComponent('track').timer = 0;
             this.track[3].getComponent('track').timer = 0;
-            cc.audioEngine.setFinishCallback(this.audioId, function() {
+            cc.audioEngine.setFinishCallback(this.audioId, function () {
                 sceneControl.switchScene('inGame', 'review');
             });
         }.bind(this));
         this.controlBtn.on(cc.Node.EventType.TOUCH_START, this.control, this);
-        this.returnBtn.on(cc.Node.EventType.TOUCH_START, function() {
+        this.returnBtn.on(cc.Node.EventType.TOUCH_START, function () {
             cc.audioEngine.stop(this.audioId);
             sceneControl.switchScene('inGame', 'select');
         }.bind(this));
+        this.hitCnt = 0;
     },
     start() {
 
