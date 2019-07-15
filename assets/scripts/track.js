@@ -71,7 +71,7 @@ cc.Class({
         //得分为good和excellent的距离
         const goodDistScaling = 0.2;
 
-        const excellentDistScaling = 0.1;
+        const excellentDistScaling = 0.15;
         this.goodDist = this.node.height * goodDistScaling;
         this.excellentDist = this.node.height * excellentDistScaling;
 
@@ -84,13 +84,11 @@ cc.Class({
         this.keyQueue[0].destroy();
         this.keyQueue.shift();
     },
-
     fadeOutKey: function (key) {
         if (key.getComponent('key').fadding === false) {
             key.getComponent('key').fadding = true;
         }
     },
-
     update(dt) {
         // this.timer = cc.audioEngine.getCurrentTime(this.audioId);
         if (this.timer >= 0) {
