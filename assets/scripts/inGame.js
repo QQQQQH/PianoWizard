@@ -24,6 +24,10 @@ cc.Class({
             default: null,
             type: cc.Label
         },
+        comboDisplay: {
+            default: null,
+            type: cc.Label
+        },
         track: {
             default: [],
             type: [cc.Node]
@@ -83,11 +87,22 @@ cc.Class({
     updateHitCnt: function (hit) {
         if (hit === true) {
             this.hitCnt++;
+            if(!this.comboVisible) this.comboVisible = true;
+            if(this.hitCnt >= 8) {
+                this.comboDisplay.string = this.hitCnt+' Combo';
+                this.comboDisplay.node.scale = 1.3;
+                this.comboDisplay.node.opacity = 0;
+                cc.tween(this.comboDisplay.node).to(0.2, { scale: 1, opacity: 255}).start();
+            }
         }
         else {
             this.hitCnt = 0;
+            if(this.comboVisible) {
+                cc.tween(this.comboDisplay.node).to(0.3, { opacity: 0 }).start();
+                this.comboVisible = false;
+            }
         }
-        cc.log(this.hitCnt);
+        // cc.log(this.hitCnt);
     },
     setTrack: function () {
         this.track[0].getComponent('track').game = this;
@@ -97,7 +112,6 @@ cc.Class({
     },
     onLoad() {
         sceneControl.fadeIn('inGame');
-        //this.updateTotScore();
         this.setTrack();
         cc.loader.loadRes(`sheets/${gameData.musicId}`, function (err, jsonAssert) {
             this.loadSheet(jsonAssert.json);
@@ -116,6 +130,7 @@ cc.Class({
             sceneControl.switchScene('inGame', 'select');
         }.bind(this));
         this.hitCnt = 0;
+        this.comboVisible = false;
     },
     start() {
 
