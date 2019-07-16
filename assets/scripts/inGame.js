@@ -58,6 +58,7 @@ cc.Class({
             + this.track[1].getComponent('track').score
             + this.track[2].getComponent('track').score
             + this.track[3].getComponent('track').score;
+        if(this.acScore === 0) return;
         gameData.finalScore = (tmp * 100 / this.acScore).toFixed(1);
         this.scoreDisplay.string = gameData.finalScore + '%';
     },
@@ -110,9 +111,7 @@ cc.Class({
         this.track[2].getComponent('track').game = this;
         this.track[3].getComponent('track').game = this;
     },
-    onLoad() {
-        sceneControl.fadeIn('inGame');
-        this.setTrack();
+    loadSheetAndPlay: function() {
         cc.loader.loadRes(`sheets/${gameData.musicId}`, function (err, jsonAssert) {
             this.loadSheet(jsonAssert.json);
             this.audioId = cc.audioEngine.play(this.audio, false, 1);
@@ -124,11 +123,20 @@ cc.Class({
                 sceneControl.switchScene('inGame', 'review');
             });
         }.bind(this));
+    },
+    onLoad() {
+        sceneControl.fadeIn('inGame');
+        this.setTrack();
+        cc.loader.loadRes(`audio/${gameData.musicId}`, cc.AudioClip, function(err, audioClip) {
+            this.audio = audioClip;
+            this.loadSheetAndPlay();
+        }.bind(this));
         this.controlBtn.on(cc.Node.EventType.TOUCH_START, this.control, this);
         this.returnBtn.on(cc.Node.EventType.TOUCH_START, function () {
             cc.audioEngine.stop(this.audioId);
             sceneControl.switchScene('inGame', 'select');
         }.bind(this));
+        this.acScore = 0;
         this.hitCnt = 0;
         this.comboVisible = false;
     },
