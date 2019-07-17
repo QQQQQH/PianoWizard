@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.234375,
-      "y": 0.234375,
+      "x": 0.2125,
+      "y": 0.2125,
       "z": 1
     },
     "_quat": {
@@ -1092,14 +1092,17 @@
     "coverPrefab": {
       "__uuid__": "549121ce-b571-429f-8e0f-4be330fc7d92"
     },
-    "coverSpriteFrame": {
-      "__uuid__": "3bdd7599-1f78-4f76-9bdf-e37e008d06d1"
-    },
     "musicInfo": {
       "__id__": 17
     },
     "returnBtn": {
       "__id__": 22
+    },
+    "returnAudio": {
+      "__uuid__": "09560326-65c9-46ba-9894-227abc6f01e5"
+    },
+    "selectAudio": {
+      "__uuid__": "a8c2b82d-1621-4d97-bc5a-9373cbb331e7"
     },
     "_id": "d6ugp4VDpAW5ETsVuafNyB"
   }

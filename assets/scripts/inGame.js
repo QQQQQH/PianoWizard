@@ -52,13 +52,25 @@ cc.Class({
             default: null,
             type: cc.AudioClip
         },
+        pauseAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
+        resumeAudio: {
+            default: null,
+            type: cc.AudioClip
+        },
+        returnAudio: {
+            default: null,
+            type: cc.AudioClip
+        }
     },
     updateTotScore: function () {
         var tmp = this.track[0].getComponent('track').score
             + this.track[1].getComponent('track').score
             + this.track[2].getComponent('track').score
             + this.track[3].getComponent('track').score;
-        if(this.acScore === 0) return;
+        if (this.acScore === 0) return;
         gameData.finalScore = (tmp * 100 / this.acScore).toFixed(1);
         this.scoreDisplay.string = gameData.finalScore + '%';
     },
@@ -78,11 +90,13 @@ cc.Class({
     control: function () {
         if (cc.audioEngine.getState(this.audioId) == 1) {
             cc.audioEngine.pause(this.audioId);
+            cc.audioEngine.playEffect(this.pauseAudio, false);
             cc.director.pause();
             this.controlBtn.getComponent(cc.Sprite).spriteFrame = this.playBtn;
 
         }
         else {
+            cc.audioEngine.playEffect(this.resumeAudio, false);
             cc.audioEngine.resume(this.audioId);
             cc.director.resume();
             this.controlBtn.getComponent(cc.Sprite).spriteFrame = this.pauseBtn;
@@ -91,17 +105,17 @@ cc.Class({
     updateHitCnt: function (hit) {
         if (hit === true) {
             this.hitCnt++;
-            if(!this.comboVisible) this.comboVisible = true;
-            if(this.hitCnt >= 8) {
-                this.comboDisplay.string = this.hitCnt+' Combo';
+            if (!this.comboVisible) this.comboVisible = true;
+            if (this.hitCnt >= 8) {
+                this.comboDisplay.string = this.hitCnt + ' Combo';
                 this.comboDisplay.node.scale = 0.325;
                 this.comboDisplay.node.opacity = 0;
-                cc.tween(this.comboDisplay.node).to(0.2, { scale: 0.25, opacity: 255}).start();
+                cc.tween(this.comboDisplay.node).to(0.2, { scale: 0.25, opacity: 255 }).start();
             }
         }
         else {
             this.hitCnt = 0;
-            if(this.comboVisible) {
+            if (this.comboVisible) {
                 cc.tween(this.comboDisplay.node).to(0.3, { opacity: 0 }).start();
                 this.comboVisible = false;
             }
@@ -114,7 +128,7 @@ cc.Class({
         this.track[2].getComponent('track').game = this;
         this.track[3].getComponent('track').game = this;
     },
-    loadSheetAndPlay: function() {
+    loadSheetAndPlay: function () {
         cc.loader.loadRes(`sheets/${gameData.musicId}`, function (err, jsonAssert) {
             this.loadSheet(jsonAssert.json);
             this.audioId = cc.audioEngine.play(this.audio, false, 1);
@@ -130,13 +144,15 @@ cc.Class({
     onLoad() {
         sceneControl.fadeIn('inGame');
         this.setTrack();
-        cc.loader.loadRes(`audio/${gameData.musicId}`, cc.AudioClip, function(err, audioClip) {
+        cc.loader.loadRes(`audio/${gameData.musicId}`, cc.AudioClip, function (err, audioClip) {
             this.audio = audioClip;
             this.loadSheetAndPlay();
         }.bind(this));
         this.controlBtn.on(cc.Node.EventType.TOUCH_START, this.control, this);
         this.returnBtn.on(cc.Node.EventType.TOUCH_START, function () {
             cc.audioEngine.stop(this.audioId);
+            cc.director.resume();
+            cc.audioEngine.playEffect(this.returnAudio, false);
             sceneControl.switchScene('inGame', 'select');
         }.bind(this));
         this.acScore = 0;
