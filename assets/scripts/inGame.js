@@ -142,7 +142,7 @@ cc.Class({
                 else if(this.hitCnt === this.acScore) gameData.award = 'Full Combo';
                 else gameData.award = '';
                 sceneControl.switchScene('inGame', 'review');
-            });
+            }.bind(this));
         }.bind(this));
     },
     onLoad() {
