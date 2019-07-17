@@ -57,6 +57,8 @@ cc.Class({
         this.score = 0.0;
         this.finalScore = gameData.finalScore;
         this.awardDisplay.string = gameData.award;
+        if(gameData.award === 'All Combo') this.awardDisplay.node.color = new cc.color(238, 108, 6, 255);
+        else if(gameData.award === 'Full Combo') this.awardDisplay.node.color = new cc.color(238, 216, 6, 255);
     },
     start() {
 

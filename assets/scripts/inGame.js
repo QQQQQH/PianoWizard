@@ -69,7 +69,7 @@ cc.Class({
             + sheet.track[1].length
             + sheet.track[2].length
             + sheet.track[3].length;
-        this.fullScore
+        // this.fullScore
         this.track[0].getComponent('track').musicSheet = sheet.track[0];
         this.track[1].getComponent('track').musicSheet = sheet.track[1];
         this.track[2].getComponent('track').musicSheet = sheet.track[2];
@@ -123,6 +123,10 @@ cc.Class({
             this.track[2].getComponent('track').timer = 0;
             this.track[3].getComponent('track').timer = 0;
             cc.audioEngine.setFinishCallback(this.audioId, function () {
+                this.updateTotScore();
+                if(gameData.finalScore === 100.0) gameData.award = 'All Combo';
+                else if(this.hitCnt === this.acScore) gameData.award = 'Full Combo';
+                else gameData.award = '';
                 sceneControl.switchScene('inGame', 'review');
             });
         }.bind(this));

@@ -36,7 +36,7 @@ var GameData = cc.Class({
     properties: {
         musicId: 0,
         finalScore: 98.7,
-        award: 'All Combo'
+        award: '',
     },
 });
 
