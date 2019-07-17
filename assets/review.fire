@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.2861111111111111,
-      "y": 0.2861111111111111,
+      "x": 0.234375,
+      "y": 0.234375,
       "z": 1
     },
     "_quat": {
@@ -469,8 +469,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 111.12,
-      "height": 80
+      "width": 444.49,
+      "height": 320
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -485,8 +485,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.25,
+      "y": 0.25,
       "z": 1
     },
     "_rotationX": 0,
@@ -514,8 +514,8 @@
     "_useOriginalSize": false,
     "_string": "Title",
     "_N$string": "Title",
-    "_fontSize": 60,
-    "_lineHeight": 80,
+    "_fontSize": 240,
+    "_lineHeight": 320,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -554,8 +554,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 91.11,
-      "height": 40
+      "width": 364.45,
+      "height": 160
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -570,8 +570,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.25,
+      "y": 0.25,
       "z": 1
     },
     "_rotationX": 0,
@@ -599,8 +599,8 @@
     "_useOriginalSize": false,
     "_string": "Artist",
     "_N$string": "Artist",
-    "_fontSize": 40,
-    "_lineHeight": 40,
+    "_fontSize": 160,
+    "_lineHeight": 160,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -639,8 +639,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 113.96,
-      "height": 50
+      "width": 455.86,
+      "height": 200
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -655,8 +655,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.25,
+      "y": 0.25,
       "z": 1
     },
     "_rotationX": 0,
@@ -684,8 +684,8 @@
     "_useOriginalSize": false,
     "_string": "0.0%",
     "_N$string": "0.0%",
-    "_fontSize": 50,
-    "_lineHeight": 50,
+    "_fontSize": 200,
+    "_lineHeight": 200,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -724,8 +724,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 204.51,
-      "height": 40
+      "width": 818.05,
+      "height": 160
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -740,8 +740,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.25,
+      "y": 0.25,
       "z": 1
     },
     "_rotationX": 0,
@@ -769,8 +769,8 @@
     "_useOriginalSize": false,
     "_string": "Full Combo",
     "_N$string": "Full Combo",
-    "_fontSize": 40,
-    "_lineHeight": 40,
+    "_fontSize": 160,
+    "_lineHeight": 160,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,

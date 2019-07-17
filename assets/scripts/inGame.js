@@ -78,10 +78,13 @@ cc.Class({
     control: function () {
         if (cc.audioEngine.getState(this.audioId) == 1) {
             cc.audioEngine.pause(this.audioId);
+            cc.director.pause();
             this.controlBtn.getComponent(cc.Sprite).spriteFrame = this.playBtn;
+
         }
         else {
             cc.audioEngine.resume(this.audioId);
+            cc.director.resume();
             this.controlBtn.getComponent(cc.Sprite).spriteFrame = this.pauseBtn;
         }
     },
@@ -91,9 +94,9 @@ cc.Class({
             if(!this.comboVisible) this.comboVisible = true;
             if(this.hitCnt >= 8) {
                 this.comboDisplay.string = this.hitCnt+' Combo';
-                this.comboDisplay.node.scale = 1.3;
+                this.comboDisplay.node.scale = 0.325;
                 this.comboDisplay.node.opacity = 0;
-                cc.tween(this.comboDisplay.node).to(0.2, { scale: 1, opacity: 255}).start();
+                cc.tween(this.comboDisplay.node).to(0.2, { scale: 0.25, opacity: 255}).start();
             }
         }
         else {

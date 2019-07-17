@@ -24,10 +24,6 @@ cc.Class({
             default: null,
             type: cc.Prefab
         },
-        coverSpriteFrame: {
-            default: null,
-            type: cc.SpriteFrame
-        },
         musicInfo: {
             default: null,
             type: cc.Node

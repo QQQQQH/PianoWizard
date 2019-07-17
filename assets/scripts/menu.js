@@ -12,15 +12,18 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        enterBtn: {
+        startBtn: {
             default: null,
             type: cc.Node
         }
     },
     onLoad () {
         sceneControl.fadeIn('menu');
-        this.enterBtn.on(cc.Node.EventType.TOUCH_START, function() {
+        this.startBtn.on(cc.Node.EventType.TOUCH_START, function() {
             sceneControl.switchScene('menu', 'select');
         });
+        cc.tween(this.startBtn.getChildByName('arrowRight')).repeatForever(
+            cc.tween().by(0.8, { x: 80 }).by(0.8, { x: -80 })
+        ).start();
     },
 });
