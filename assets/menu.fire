@@ -806,6 +806,9 @@
     "startBtn": {
       "__id__": 11
     },
+    "startAudio": {
+      "__uuid__": "a8c2b82d-1621-4d97-bc5a-9373cbb331e7"
+    },
     "_id": "b06VGrzSpKpYNFahkWttzt"
   }
 ]
