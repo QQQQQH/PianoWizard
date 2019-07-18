@@ -9,26 +9,26 @@
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        startBtn: {
-            default: null,
-            type: cc.Node
-        },
-        startAudio: {
-            default: null,
-            type: cc.AudioClip
-        }
+  properties: {
+    startBtn: {
+      default: null,
+      type: cc.Node
     },
-    onLoad() {
-        sceneControl.fadeIn('menu');
-        this.startBtn.on(cc.Node.EventType.TOUCH_START, function () {
-            cc.audioEngine.playEffect(this.startAudio, false);
-            sceneControl.switchScene('menu', 'select');
-        }.bind(this));
-        cc.tween(this.startBtn.getChildByName('arrowRight')).repeatForever(
-            cc.tween().by(0.8, { x: 80 }).by(0.8, { x: -80 })
-        ).start();
-    },
-});
+    startAudio: {
+      default: null,
+      type: cc.AudioClip
+    }
+  },
+  onLoad () {
+    sceneControl.fadeIn('menu')
+    this.startBtn.on(cc.Node.EventType.TOUCH_START, function () {
+      cc.audioEngine.playEffect(this.startAudio, false)
+      sceneControl.switchScene('menu', 'select')
+    }.bind(this))
+    cc.tween(this.startBtn.getChildByName('arrowRight')).repeatForever(
+      cc.tween().by(0.8, { x: 80 }).by(0.8, { x: -80 })
+    ).start()
+  }
+})

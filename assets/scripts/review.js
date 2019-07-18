@@ -9,65 +9,65 @@
 //  - [English] https://www.cocos2d-x.org/docs/creator/manual/en/scripting/life-cycle-callbacks.html
 
 cc.Class({
-    extends: cc.Component,
+  extends: cc.Component,
 
-    properties: {
-        cover: {
-            default: null,
-            type: cc.Node
-        },
-        titleDisplay: {
-            default: null,
-            type: cc.Label
-        },
-        artistDisplay: {
-            default: null,
-            type: cc.Label
-        },
-        scoreDisplay: {
-            default: null,
-            type: cc.Label
-        },
-        awardDisplay: {
-            default: null,
-            type: cc.Label
-        },
-        returnBtn: {
-            default: null,
-            type: cc.Node
-        }
+  properties: {
+    cover: {
+      default: null,
+      type: cc.Node
     },
-    loadMusicInfo: function(sheet) {
-        this.titleDisplay.string = sheet.title;
-        this.artistDisplay.string = sheet.artist;
+    titleDisplay: {
+      default: null,
+      type: cc.Label
     },
-    onLoad() {
-        sceneControl.fadeIn('review');
-        cc.tween(this.scoreDisplay.node).delay(0.5).to(0.5, {position: cc.v2(-310, -50)}).start();
-        cc.tween(this.awardDisplay.node).delay(1).to(0.5, {position: cc.v2(-310, -120)}).start();
-        cc.loader.loadRes(`covers/cover${gameData.musicId}`, cc.SpriteFrame, function(err, spriteFrame) {
-            this.cover.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-        }.bind(this));
-        cc.loader.loadRes(`sheets/${gameData.musicId}`, function(err, jsonAssert) {
-            this.loadMusicInfo(jsonAssert.json);
-        }.bind(this));
-        this.returnBtn.on(cc.Node.EventType.TOUCH_END, function() {
-            sceneControl.switchScene('review', 'select');
-        });
-        this.score = 0.0;
-        this.finalScore = gameData.finalScore;
-        this.awardDisplay.string = gameData.award;
-        if(gameData.award === 'All Combo') this.awardDisplay.node.color = new cc.color(238, 108, 6, 255);
-        else if(gameData.award === 'Full Combo') this.awardDisplay.node.color = new cc.color(238, 216, 6, 255);
+    artistDisplay: {
+      default: null,
+      type: cc.Label
     },
-    start() {
+    scoreDisplay: {
+      default: null,
+      type: cc.Label
+    },
+    awardDisplay: {
+      default: null,
+      type: cc.Label
+    },
+    returnBtn: {
+      default: null,
+      type: cc.Node
+    }
+  },
+  loadMusicInfo: function (sheet) {
+    this.titleDisplay.string = sheet.title
+    this.artistDisplay.string = sheet.artist
+  },
+  onLoad () {
+    sceneControl.fadeIn('review')
+    cc.tween(this.scoreDisplay.node).delay(0.5).to(0.5, { position: cc.v2(-310, -50) }).start()
+    cc.tween(this.awardDisplay.node).delay(1).to(0.5, { position: cc.v2(-310, -120) }).start()
+    cc.loader.loadRes(`covers/cover${gameData.musicId}`, cc.SpriteFrame, function (err, spriteFrame) {
+      this.cover.getComponent(cc.Sprite).spriteFrame = spriteFrame
+    }.bind(this))
+    cc.loader.loadRes(`sheets/${gameData.musicId}`, function (err, jsonAssert) {
+      this.loadMusicInfo(jsonAssert.json)
+    }.bind(this))
+    this.returnBtn.on(cc.Node.EventType.TOUCH_END, function () {
+      sceneControl.switchScene('review', 'select')
+    })
+    this.score = 0.0
+    this.finalScore = gameData.finalScore
+    this.awardDisplay.string = gameData.award
+    if (gameData.award === 'All Combo') this.awardDisplay.node.color = new cc.color(238, 108, 6, 255)
+    else if (gameData.award === 'Full Combo') this.awardDisplay.node.color = new cc.color(238, 216, 6, 255)
+  },
+  start () {
 
-    },
+  },
 
-    update(dt) {
-        if(this.score < this.finalScore && this.scoreDisplay.node.x == -310) {
-            this.score = this.score+0.6 >= this.finalScore ? this.finalScore : this.score+0.6;
-            this.scoreDisplay.string = (this.score).toFixed(1)+'%';
-        }
-    },
-});
+  update (dt) {
+    if (this.score < this.finalScore && this.scoreDisplay.node.x === -310) {
+      this.score = this.score + 0.6 >= this.finalScore ? this.finalScore : this.score + 0.6
+      this.scoreDisplay.string = (this.score).toFixed(1) + '%'
+    }
+  }
+})

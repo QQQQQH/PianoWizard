@@ -10,36 +10,36 @@
 'use strict'
 
 var SceneControl = cc.Class({
-    name: 'SceneControl',
+  name: 'SceneControl',
 
-    properties: {
-        duration: 0.2
-    },
-    
-    switchScene: function(oldScene, newScene) {
-        var canvas = cc.director.getScene().getChildByName(oldScene);
-        cc.tween(canvas).to(this.duration, { opacity: 0}).call(function() {
-            cc.director.loadScene(newScene);
-        }).start();
-    },
-    fadeIn: function(sceneName) {
-        var canvas = cc.director.getScene().getChildByName(sceneName);
-            canvas.opacity = 0;
-            cc.tween(canvas).to(this.duration, { opacity: 255 }).start();
-    }
+  properties: {
+    duration: 0.2
+  },
 
-});
+  switchScene: function (oldScene, newScene) {
+    var canvas = cc.director.getScene().getChildByName(oldScene)
+    cc.tween(canvas).to(this.duration, { opacity: 0 }).call(function () {
+      cc.director.loadScene(newScene)
+    }).start()
+  },
+  fadeIn: function (sceneName) {
+    var canvas = cc.director.getScene().getChildByName(sceneName)
+    canvas.opacity = 0
+    cc.tween(canvas).to(this.duration, { opacity: 255 }).start()
+  }
+
+})
 
 var GameData = cc.Class({
-    name: 'GameData',
+  name: 'GameData',
 
-    properties: {
-        musicId: 0,
-        finalScore: 98.7,
-        award: '',
-    },
-});
+  properties: {
+    musicId: 0,
+    finalScore: 98.7,
+    award: ''
+  }
+})
 
-window.sceneControl = new SceneControl();
+window.sceneControl = new SceneControl()
 
-window.gameData = new GameData();
+window.gameData = new GameData()
