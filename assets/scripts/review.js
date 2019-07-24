@@ -66,8 +66,9 @@ cc.Class({
 
   update (dt) {
     if (this.score < this.finalScore && this.scoreDisplay.node.x === -310) {
-      this.score = this.score + 0.6 >= this.finalScore ? this.finalScore : this.score + 0.6
-      this.scoreDisplay.string = (this.score).toFixed(1) + '%'
+      if (this.score + 0.7 < this.finalScore) this.score = this.score + 0.7
+      else this.score = this.finalScore
+      this.scoreDisplay.string = Math.floor(this.score * 10) / 10 + '%'
     }
   }
 })
